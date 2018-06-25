@@ -1,0 +1,8 @@
+<launch>
+    <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen">
+        <param name="engine" value="xunfei"/>
+        <param name="app_id" value="5b2efdad" type="string"/>
+        <remap from="/audio" to="/xiaoqiang_audio/audio" />
+    </node>
+    <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen" />
+</launch>

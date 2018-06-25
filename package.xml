@@ -1,0 +1,20 @@
+<package format="2">
+  <name>xiaoqiang_tts</name>
+  <version>0.0.1</version>
+  <description>
+      text to speech 
+  </description>
+  <license>MIT</license>
+  <author email="randoms@bwbot.org">Randoms</author>
+  <maintainer email="randoms@bwbot.org">Randoms</maintainer>
+  <url type="website">http://github.com/bluewhalerobot/xiaoqiang_tts</url>
+  <url type="bugtracker">https://github.com/bluewhalerobot/xiaoqiang_tts/issues</url>
+  <url type="repository">https://github.com/bluewhalerobot/xiaoqiang_tts</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>audio_common</depend>
+</package>
