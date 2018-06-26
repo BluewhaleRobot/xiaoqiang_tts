@@ -1,3 +1,5 @@
 *.o
 *.pyc
 .vscode
+msc
+bin

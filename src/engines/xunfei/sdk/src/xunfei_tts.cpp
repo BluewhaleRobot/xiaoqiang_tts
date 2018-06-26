@@ -88,7 +88,7 @@ std::vector<uint8_t> text_to_speech(const char *src_text, const char *params)
       break;
     if (NULL != data)
     {
-      audio_data.insert(audio_data.end(), (uint8_t*)data, (uint8_t*)data + audio_len);
+      audio_data.insert(audio_data.end(), (uint8_t *)data, (uint8_t *)data + audio_len);
       wav_hdr.data_size += audio_len; //计算data_size大小
     }
     if (MSP_TTS_FLAG_DATA_END == synth_status)
@@ -104,10 +104,7 @@ std::vector<uint8_t> text_to_speech(const char *src_text, const char *params)
   }
   /* 修正wav文件头数据的大小 */
   wav_hdr.size_8 += wav_hdr.data_size + (sizeof(wav_hdr) - 8);
-  // *((int*)(audio_data.data() + 4)) = wav_hdr.size_8;
-  // *((int*)(audio_data.data() + 40)) = wav_hdr.data_size;
-
-  audio_data.insert(audio_data.begin(), (uint8_t*)&wav_hdr, (uint8_t*)&wav_hdr + sizeof(wav_hdr));
+  audio_data.insert(audio_data.begin(), (uint8_t *)&wav_hdr, (uint8_t *)&wav_hdr + sizeof(wav_hdr));
 
   /* 合成完毕 */
   ret = QTTSSessionEnd(sessionID, "Normal");
@@ -165,7 +162,8 @@ tts(PyObject *self, PyObject *args)
 
   PyObject *pylist = PyList_New(audio_data.size());
   PyObject *item;
-  for(int i=0;i<audio_data.size(); i++){
+  for (int i = 0; i < audio_data.size(); i++)
+  {
     item = PyInt_FromLong(audio_data[i]);
     PyList_SET_ITEM(pylist, i, item);
   }

@@ -25,21 +25,14 @@
 # Author: Randoms
 #
 
-from xiaoqiang_tts import _xunfei_tts
-import rospy
-from audio_common_msgs.msg import AudioData
-import time
+import matplotlib.pyplot as plt
+import struct
 
-
-class XunfeiTTS:
-
-    def __init__(self):
-        self.app_id = rospy.get_param("~app_id", "5b2efdad")
-
-    def tts(self, words):
-        audio_data = AudioData()
-        audio_data.data = _xunfei_tts.tts(words, self.app_id)
-        return audio_data
-
-    def asr(self, audio_data):
-        pass
+with open("/home/randoms/audio_1529919124", "rb") as audio_file:
+    data = audio_file.read()
+    # data = [ord(x) for x in data]
+    # remove file header
+    data = data[44:]
+    data = [ struct.unpack("<h", data[2*x:2*x + 2]) for x in range(0, len(data) / 2 )]
+    plt.plot(data)
+    plt.show()

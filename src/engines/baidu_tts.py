@@ -25,6 +25,7 @@
 # Author: Randoms
 #         
 
+import json
 from aip import AipSpeech
 import rospy
 from audio_common_msgs.msg import AudioData
@@ -54,7 +55,17 @@ class BaiduTTS:
         return audio_data
 
     def asr(self, audio_data):
-        self.client.asr(audio_data, 'wav', 16000, {
-            'dev_pid': 1536,
+        res = self.client.asr(audio_data.data, 'pcm', 16000, {
+            'dev_pid': 1936,
         })
+        rospy.loginfo(res)
+        if "err_no" in res and res["err_no"] == 0:
+            rospy.loginfo(res["result"])
+            return res["result"][0].encode("utf-8")
+        else:
+            if "err_msg" in res:
+                rospy.logerr(res["err_msg"])
+            if "error_msg" in res:
+                rospy.logerr(res["error_msg"])
+            return ""
 
