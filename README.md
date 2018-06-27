@@ -14,6 +14,8 @@ cd ..
 catkin_make -DCATKIN_WHITELIST_PACKAGES="xiaoqiang_tts"
 ```
 
+程序使用的是我自己申请的百度和迅飞参数，最好自己再去百度和迅飞的官网申请一个。迅飞的sdk下载完成后覆盖至src/engines/xunfei/sdk内，注意保留其中的src文件夹。然后在launch文件中设置自己的appid，再catkin_make一下就可以了。
+
 ## 使用
 
 ### 使用语音合成功能
