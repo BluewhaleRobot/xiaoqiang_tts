@@ -44,5 +44,6 @@ class XunfeiTTS:
         return audio_data
 
     def asr(self, audio_data):
-        res = _xunfei_tts.asr([ord(x) for x in audio_data.data], self.app_id, self.user_dict, self.timeout)
+        res = _xunfei_tts.asr(
+            [ord(x) for x in audio_data.data], self.app_id, self.user_dict, self.timeout)
         return res

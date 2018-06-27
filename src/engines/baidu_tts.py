@@ -23,12 +23,13 @@
 # SOFTWARE.
 #
 # Author: Randoms
-#         
+#
 
 import json
 from aip import AipSpeech
 import rospy
 from audio_common_msgs.msg import AudioData
+
 
 class BaiduTTS:
 
@@ -43,7 +44,7 @@ class BaiduTTS:
         self.client.setSocketTimeoutInMillis(timeout)
 
     def tts(self, words):
-        result  = self.client.synthesis(words, 'zh', 1, {
+        result = self.client.synthesis(words, 'zh', 1, {
             'vol': 5,
         })
 
@@ -68,4 +69,3 @@ class BaiduTTS:
             if "error_msg" in res:
                 rospy.logerr(res["error_msg"])
             return ""
-

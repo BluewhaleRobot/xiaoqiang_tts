@@ -34,7 +34,7 @@ from std_msgs.msg import String
 
 if __name__ == "__main__":
     rospy.init_node("xiaoqiang_tts", anonymous=True)
-    audio_pub = rospy.Publisher("/audio", AudioData, queue_size=10)
+    audio_pub = rospy.Publisher("~audio", AudioData, queue_size=10)
     engine = rospy.get_param("~engine", "xunfei")
 
     # init client

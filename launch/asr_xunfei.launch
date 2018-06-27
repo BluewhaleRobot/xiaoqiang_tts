@@ -5,7 +5,7 @@
         <param name="dict" value="$(find xiaoqiang_tts)/src/engines/xunfei/sdk/bin/userwords.txt" />
         <param name="timeout" value="5000" />
         <param name="min_volum" value="1200" />
-        <remap from="/audio" to="/audio/audio" />
+        <remap from="~audio" to="/audio/audio" />
         <remap from="~text" to="/xiaoqiang_tts/text" />
     </node>
     <include file="$(find audio_capture)/launch/capture_wave.launch" ns="audio"/>

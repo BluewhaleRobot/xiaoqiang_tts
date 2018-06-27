@@ -1,10 +1,38 @@
+
+/******************************************************************************
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2018 Bluewhale Robot
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*
+* Author: Randoms
+*******************************************************************************/
+
 #include "xunfei_asr.h"
 
 static std::string reg_result = "";
 static bool result_flag = false;
 
 /* Upload User words */
-int upload_userwords(const char * user_dict)
+int upload_userwords(const char *user_dict)
 {
     char *userwords = NULL;
     size_t len = 0;
@@ -106,7 +134,8 @@ void on_speech_begin()
 }
 void on_speech_end(int reason)
 {
-    if (reason != END_REASON_VAD_DETECT){
+    if (reason != END_REASON_VAD_DETECT)
+    {
         reg_result = "";
         result_flag = true;
     }
@@ -193,7 +222,7 @@ PyObject *asr(PyObject *self, PyObject *args)
     int timeout = 0;
     int ret = MSP_SUCCESS;
     int upload_on = 1; /* whether upload the user word */
-    int aud_src = 0; /* from mic or file */
+    int aud_src = 0;   /* from mic or file */
 
     int num_lines; /* how many lines we passed for parsing */
     int line;      /* pointer to the line as a string */
@@ -252,7 +281,8 @@ PyObject *asr(PyObject *self, PyObject *args)
     {
         printf("Uploading the user words ...\n");
         ret = upload_userwords(user_dict);
-        if (MSP_SUCCESS != ret){
+        if (MSP_SUCCESS != ret)
+        {
             result_flag = true;
             goto exit;
         }
@@ -263,8 +293,9 @@ exit:
     MSPLogout(); // Logout...
     int timecount = 0;
 
-    while(!result_flag && (timecount < timeout || timeout == 0)){
-        usleep(100*1000);
+    while (!result_flag && (timecount < timeout || timeout == 0))
+    {
+        usleep(100 * 1000);
         timecount += 100;
     }
     return Py_BuildValue("s", reg_result.c_str());

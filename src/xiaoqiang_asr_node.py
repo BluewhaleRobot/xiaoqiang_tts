@@ -65,17 +65,18 @@ def is_empty(audio_data):
     raw_data = [float(struct.unpack("<h", "".join(audio_data.data[2*x:2*x + 2]))[0])
                 for x in range(0, len(audio_data.data) / 2)]
     raw_data = signal.filtfilt(b, a, raw_data)
-    
+
     if numpy.max(raw_data) < MIN_VOLUM:
         rospy.loginfo(numpy.max(raw_data))
         return True
     else:
-        rospy.logwarn(len(raw_data[ raw_data > MIN_VOLUM]))
-        if len(raw_data[ raw_data > MIN_VOLUM]) < 100:
+        rospy.logwarn(len(raw_data[raw_data > MIN_VOLUM]))
+        if len(raw_data[raw_data > MIN_VOLUM]) < 100:
             return True
         rospy.loginfo(numpy.max(raw_data))
         rospy.loginfo("Voice Found")
         return False
+
 
 def unify(audio_data):
     raw_data = [float(struct.unpack("<h", "".join(audio_data.data[2*x:2*x + 2]))[0])
@@ -117,7 +118,7 @@ def wav_file(sample_array, sample_rate):
 
 
 if __name__ == "__main__":
-    rospy.init_node("xiaoqiang_asr_node", anonymous=False)
+    rospy.init_node("xiaoqiang_asr_node", anonymous=True)
     words_pub = rospy.Publisher("~text", String, queue_size=10)
     MIN_VOLUM = rospy.get_param("~min_volum", 2000)
     engine = rospy.get_param("~engine", "xunfei")
@@ -139,20 +140,21 @@ if __name__ == "__main__":
 
     while not rospy.is_shutdown():
         time.sleep(0.5)
-        rospy.loginfo("AUDIO_CACHE Duration: " + str(audio_duration(AUDIO_CACHE)))
+        rospy.loginfo("AUDIO_CACHE Duration: " +
+                      str(audio_duration(AUDIO_CACHE)))
         if is_end(AUDIO_CACHE) and audio_duration(AUDIO_CACHE) > 2:
             # valid audio content
             CURRENT_AUDIO.data = AUDIO_CACHE.data
             AUDIO_CACHE.data = []
             if not is_empty(CURRENT_AUDIO):
                 rospy.loginfo("New content found")
-                rospy.loginfo("Duration: " + str(audio_duration(CURRENT_AUDIO)))
-                audio_file_name = "/home/randoms/audio_" + str(int(time.time()))
+                rospy.loginfo(
+                    "Duration: " + str(audio_duration(CURRENT_AUDIO)))
+                audio_file_name = "/home/randoms/audio_" + \
+                    str(int(time.time()))
                 # with open(audio_file_name, "w+") as audio_file:
                 #     audio_file.write(wav_file(
                 #         unify(CURRENT_AUDIO).data, 16000))
                 words = String()
                 words.data = client.asr(CURRENT_AUDIO)
                 words_pub.publish(words)
-
-                

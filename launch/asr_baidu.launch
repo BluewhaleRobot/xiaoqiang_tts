@@ -6,7 +6,7 @@
         <param name="secret_key" value="awsNwH6YknDjK93LZGYS14CvMY3N3KoB" />
         <param name="timeout" value="5000" />
         <param name="min_volum" value="2000" />
-        <remap from="/audio" to="/audio/audio" />
+        <remap from="~audio" to="/audio/audio" />
         <remap from="~text" to="/xiaoqiang_tts/text" />
     </node>
     <include file="$(find audio_capture)/launch/capture_wave.launch" ns="audio"/>

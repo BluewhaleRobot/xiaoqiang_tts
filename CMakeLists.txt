@@ -4,7 +4,6 @@ project(xiaoqiang_tts)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  sensor_msgs
   std_msgs
 )
 
@@ -21,7 +20,7 @@ include_directories(
 catkin_python_setup()
 
 catkin_package(
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs
 )
 
 link_libraries(${PYTHON_LIBRARIES})
@@ -43,32 +42,3 @@ set_target_properties(xunfei_tts PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
   LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
-
-# target_include_directories(xunfei_tts
-#   ${catkin_INCLUDE_DIRS}
-# )
-
-# install(
-#   TARGETS ${PROJECT_NAME} ${PROJECT_NAME}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-# install(
-#   DIRECTORY launch
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-# install(
-#   DIRECTORY udevs
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-# install(
-#   DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-# )
-
-# install(
-#   FILES  scripts/fixudev
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )

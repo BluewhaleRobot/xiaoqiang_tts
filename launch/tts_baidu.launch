@@ -5,7 +5,7 @@
         <param name="api_key" value="lgd8boQtsEM70zLkVqyalzaA"/>
         <param name="secret_key" value="awsNwH6YknDjK93LZGYS14CvMY3N3KoB" />
         <param name="timeout" value="5000" />
-        <remap from="/audio" to="/xiaoqiang_audio/audio" />
+        <remap from="~audio" to="/xiaoqiang_audio/audio" />
     </node>
     <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen"/>
 </launch>

@@ -33,6 +33,7 @@ with open("/home/randoms/audio_1529919124", "rb") as audio_file:
     # data = [ord(x) for x in data]
     # remove file header
     data = data[44:]
-    data = [ struct.unpack("<h", data[2*x:2*x + 2]) for x in range(0, len(data) / 2 )]
+    data = [struct.unpack("<h", data[2*x:2*x + 2])
+            for x in range(0, len(data) / 2)]
     plt.plot(data)
     plt.show()
