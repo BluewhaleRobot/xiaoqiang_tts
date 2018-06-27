@@ -15,6 +15,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/src/
   ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/include/
+  ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/
 )
 
 catkin_python_setup()
@@ -26,6 +27,8 @@ catkin_package(
 link_libraries(${PYTHON_LIBRARIES})
 
 add_library(xunfei_tts
+  ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/src/speech_recognizer.c
+  ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/src/xunfei_asr.cpp
   ${PROJECT_SOURCE_DIR}/src/engines/xunfei/sdk/src/xunfei_tts.cpp
 )
 

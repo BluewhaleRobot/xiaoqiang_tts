@@ -11,6 +11,7 @@
 #include "qtts.h"
 #include "msp_cmn.h"
 #include "msp_errors.h"
+#include "xunfei_asr.h"
 
 /* wav音频头部格式 */
 typedef struct _wave_pcm_hdr
@@ -173,7 +174,9 @@ tts(PyObject *self, PyObject *args)
 static PyMethodDef module_methods[] =
     {
         {"tts", tts, METH_VARARGS, "tts"},
-        {NULL, NULL, 0, NULL}};
+        {"asr", asr, METH_VARARGS, "asr"},
+        {NULL, NULL, 0, NULL},
+    };
 
 PyObject *moduleInit(PyObject *m)
 {

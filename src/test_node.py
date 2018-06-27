@@ -25,24 +25,13 @@
 # Author: Randoms
 #
 
-from xiaoqiang_tts import _xunfei_tts
-import rospy
+from engines.xunfei_tts import XunfeiTTS
 from audio_common_msgs.msg import AudioData
-import time
 
-
-class XunfeiTTS:
-
-    def __init__(self):
-        self.app_id = rospy.get_param("~app_id", "5b2efdad")
-        self.timeout = rospy.get_param("~timeout", 5000)
-        self.user_dict = rospy.get_param("~dict", "")
-
-    def tts(self, words):
-        audio_data = AudioData()
-        audio_data.data = _xunfei_tts.tts(words, self.app_id)
-        return audio_data
-
-    def asr(self, audio_data):
-        res = _xunfei_tts.asr([ord(x) for x in audio_data.data], self.app_id, self.user_dict, self.timeout)
-        return res
+if __name__ == "__main__":
+    client = XunfeiTTS()
+    with open("/home/randoms/audio_1529997396", "r") as audio_file:
+        audio_data = audio_file.read()
+        audio_data_msg = AudioData()
+        audio_data_msg.data = audio_data
+        client.asr(audio_data_msg)

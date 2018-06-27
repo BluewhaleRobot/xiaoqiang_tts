@@ -118,7 +118,7 @@ def wav_file(sample_array, sample_rate):
 
 if __name__ == "__main__":
     rospy.init_node("xiaoqiang_asr_node", anonymous=False)
-    words_pub = rospy.Publisher("~words", String, queue_size=10)
+    words_pub = rospy.Publisher("~text", String, queue_size=10)
     MIN_VOLUM = rospy.get_param("~min_volum", 2000)
     engine = rospy.get_param("~engine", "xunfei")
 
@@ -148,9 +148,9 @@ if __name__ == "__main__":
                 rospy.loginfo("New content found")
                 rospy.loginfo("Duration: " + str(audio_duration(CURRENT_AUDIO)))
                 audio_file_name = "/home/randoms/audio_" + str(int(time.time()))
-                with open(audio_file_name, "w+") as audio_file:
-                    audio_file.write(wav_file(
-                        unify(CURRENT_AUDIO).data, 16000))
+                # with open(audio_file_name, "w+") as audio_file:
+                #     audio_file.write(wav_file(
+                #         unify(CURRENT_AUDIO).data, 16000))
                 words = String()
                 words.data = client.asr(CURRENT_AUDIO)
                 words_pub.publish(words)

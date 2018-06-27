@@ -1,0 +1,12 @@
+<launch>
+    <node name="xiaoqiang_asr" pkg="xiaoqiang_tts" type="xiaoqiang_asr_node.py" output="screen">
+        <param name="engine" value="xunfei"/>
+        <param name="app_id" value="5b2efdad" type="string"/>
+        <param name="dict" value="$(find xiaoqiang_tts)/src/engines/xunfei/sdk/bin/userwords.txt" />
+        <param name="timeout" value="5000" />
+        <param name="min_volum" value="1200" />
+        <remap from="/audio" to="/audio/audio" />
+        <remap from="~text" to="/xiaoqiang_tts/text" />
+    </node>
+    <include file="$(find audio_capture)/launch/capture_wave.launch" ns="audio"/>
+</launch>
