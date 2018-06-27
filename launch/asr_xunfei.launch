@@ -1,11 +1,18 @@
 <launch>
     <node name="xiaoqiang_asr" pkg="xiaoqiang_tts" type="xiaoqiang_asr_node.py" output="screen">
+        <!-- 设置语音识别后端程序，目前支持baidu和xunfei -->
         <param name="engine" value="xunfei"/>
+        <!-- xunfei语音识别app_id,此参数要去迅飞开发者中心自己申请 -->
         <param name="app_id" value="5b2efdad" type="string"/>
+        <!-- xunfei用户字典，设置此字典会优先匹配字典中的词 -->
         <param name="dict" value="$(find xiaoqiang_tts)/src/engines/xunfei/sdk/bin/userwords.txt" />
+        <!-- 超时时间，超过这个时间则认为语音识别失败，取消当前识别任务 -->
         <param name="timeout" value="5000" />
+        <!-- 最小识别声音，当声音小于此值时则认为没有人说话，如果环境嘈杂，适当调高此值防止误触发 -->
         <param name="min_volum" value="1200" />
+        <!-- 声音来源话题 -->
         <remap from="~audio" to="/audio/audio" />
+        <!-- 文字输出话题 -->
         <remap from="~text" to="/xiaoqiang_tts/text" />
     </node>
     <include file="$(find audio_capture)/launch/capture_wave.launch" ns="audio"/>

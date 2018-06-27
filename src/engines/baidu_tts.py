@@ -56,7 +56,7 @@ class BaiduTTS:
         return audio_data
 
     def asr(self, audio_data):
-        res = self.client.asr(audio_data.data, 'pcm', 16000, {
+        res = self.client.asr("".join(audio_data.data), 'pcm', 16000, {
             'dev_pid': 1936,
         })
         rospy.loginfo(res)

@@ -1,10 +1,16 @@
 <launch>
     <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen">
+        <!-- 设置语音识别后端程序，目前支持baidu和xunfei -->
         <param name="engine" value="baidu"/>
+        <!-- baidu语音识别app_id,此参数要去百度开发者中心自己申请 -->
         <param name="app_id" value="11436808" type="string"/>
+        <!-- baidu语音识别api_key,此参数要去百度开发者中心自己申请 -->
         <param name="api_key" value="lgd8boQtsEM70zLkVqyalzaA"/>
+        <!-- baidu语音识别secret_key,此参数要去百度开发者中心自己申请 -->
         <param name="secret_key" value="awsNwH6YknDjK93LZGYS14CvMY3N3KoB" />
+        <!-- 超时时间，超过这个时间则认为语音识别失败，取消当前识别任务 -->
         <param name="timeout" value="5000" />
+        <!-- 声音输出话题 -->
         <remap from="~audio" to="/xiaoqiang_audio/audio" />
     </node>
     <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen"/>
