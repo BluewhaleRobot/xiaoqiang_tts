@@ -136,7 +136,7 @@ if __name__ == "__main__":
         AUDIO_CACHE.data += audio_data.data
         AUDIO_CACHE.data = AUDIO_CACHE.data[-60 * 16000 * 2:]
 
-    rospy.Subscriber("/audio", AudioData, process_audio)
+    rospy.Subscriber("~audio", AudioData, process_audio)
 
     while not rospy.is_shutdown():
         time.sleep(0.5)
@@ -157,4 +157,7 @@ if __name__ == "__main__":
                 #         unify(CURRENT_AUDIO).data, 16000))
                 words = String()
                 words.data = client.asr(CURRENT_AUDIO)
+                if len(words.data) == 0:
+                    continue
                 words_pub.publish(words)
+                rospy.loginfo("Heared: " + words.data)
