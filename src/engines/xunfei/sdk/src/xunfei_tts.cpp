@@ -146,7 +146,7 @@ std::vector<uint8_t> text_to_speech(const char *src_text, const char *params)
 }
 
 /**
- * Python Module Related 
+ * Python Module Related
  **/
 
 static PyObject *
@@ -182,7 +182,7 @@ tts(PyObject *self, PyObject *args)
     Py_RETURN_NONE;
   }
   /* 文本合成 */
-  auto audio_data = text_to_speech(words, session_begin_params);
+  std::vector<uint8_t> audio_data = text_to_speech(words, session_begin_params);
   if (MSP_SUCCESS != ret)
   {
     printf("text_to_speech failed, error code: %d.\n", ret);
