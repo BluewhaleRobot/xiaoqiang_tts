@@ -29,10 +29,9 @@ import rospy
 from audio_common_msgs.msg import AudioData
 from engines.baidu_tts import BaiduTTS as bd_client
 from engines.xunfei_tts import XunfeiTTS as xf_client
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 import time
 import struct
-import librosa
 import numpy
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -41,6 +40,7 @@ AUDIO_CACHE = AudioData()
 CURRENT_AUDIO = AudioData()
 NEW_AUDIO_FLAG = False
 MIN_VOLUM = 2000
+AUDIO_STATUS = False
 
 b, a = signal.butter(3, 0.10, 'high')
 
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     words_pub = rospy.Publisher("~text", String, queue_size=10)
     MIN_VOLUM = rospy.get_param("~min_volum", 2000)
     engine = rospy.get_param("~engine", "xunfei")
-
+    
     # init client
     client = None
     if engine == "baidu":
@@ -133,10 +133,19 @@ if __name__ == "__main__":
         rospy.logerr("Unknown engine {engine}".format(engine=engine))
 
     def process_audio(audio_data):
+        if AUDIO_STATUS:
+            # xiaoqiang is speaking, skip current audio data
+            return
         AUDIO_CACHE.data += audio_data.data
         AUDIO_CACHE.data = AUDIO_CACHE.data[-60 * 16000 * 2:]
 
     rospy.Subscriber("~audio", AudioData, process_audio)
+
+    def audio_status_cb(audio_status):
+        global AUDIO_STATUS
+        AUDIO_STATUS = audio_status.data
+
+    rospy.Subscriber("~audio_status", Bool, audio_status_cb)
 
     while not rospy.is_shutdown():
         time.sleep(0.5)

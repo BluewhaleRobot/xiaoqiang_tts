@@ -14,6 +14,8 @@
         <remap from="~audio" to="/audio/audio" />
         <!-- 文字输出话题 -->
         <remap from="~text" to="/xiaoqiang_tts/text" />
+        <!-- 声音输出状态 -->
+        <remap from="~audio_status" to="/xiaoqiang_audio/audio_status" />
     </node>
     <include file="$(find audio_capture)/launch/capture_wave.launch" ns="audio"/>
 </launch>

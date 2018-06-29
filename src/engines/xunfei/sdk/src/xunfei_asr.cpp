@@ -66,7 +66,7 @@ int upload_userwords(const char *user_dict)
     }
     userwords[len] = '\0';
 
-    MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret); //ÉÏ´«ÓÃ»§´Ê±í
+    MSPUploadData("userwords", userwords, len, "sub = uup, dtt = userword", &ret);
     if (MSP_SUCCESS != ret)
     {
         printf("\nMSPUploadData failed ! errorCode: %d \n", ret);
