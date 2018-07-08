@@ -23,14 +23,17 @@
 # SOFTWARE.
 #
 # Author: Randoms
-#         
+#
+
+import os
+import time
 
 import rospy
-import time
-from engines.baidu_tts import BaiduTTS as bd_client
-from engines.xunfei_tts import XunfeiTTS as xf_client
 from audio_common_msgs.msg import AudioData
 from std_msgs.msg import String
+
+from engines.baidu_tts import BaiduTTS as bd_client
+from engines.xunfei_tts import XunfeiTTS as xf_client
 
 if __name__ == "__main__":
     rospy.init_node("xiaoqiang_tts", anonymous=True)
@@ -48,15 +51,34 @@ if __name__ == "__main__":
 
     # set text sub
     processing_flag = False
+
     def text_cb(text):
         global processing_flag
         if processing_flag:
             return
         processing_flag = True
-        audio_data = client.tts(text.data)
+        audio_data = read_from_cache(text)
+        if audio_data is None:
+            audio_data = client.tts(text.data)
+            if audio_data is not None:
+                with open(os.path.join(
+                        "/tmp/xiaoqiang_tts", text.data), "w+") as audio_file:
+                    audio_file.write(bytearray(audio_data.data))
         if audio_data is not None:
             audio_pub.publish(audio_data)
         processing_flag = False
+
+    def read_from_cache(text):
+        if not os.path.exists("/tmp/xiaoqiang_tts"):
+            os.mkdir("/tmp/xiaoqiang_tts")
+            return None
+        if os.path.exists(os.path.join("/tmp/xiaoqiang_tts", text.data)):
+            with open(os.path.join(
+                    "/tmp/xiaoqiang_tts", text.data), "rb") as audio_file:
+                audio_data = AudioData()
+                audio_data.data = audio_file.read()
+                return audio_data
+        return None
 
     text_sub = rospy.Subscriber("~text", String, text_cb)
     while not rospy.is_shutdown():
