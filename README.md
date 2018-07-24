@@ -10,6 +10,8 @@ git clone https://github.com/bluewhalerobot/xiaoqiang_tts
 git clone https://github.com/bluewhalerobot/xiaoqiang_audio
 rosdep install xiaoqiang_audio
 rosdep install xiaoqiang_tts
+sudo pip install requests
+sudo pip install baidu-aip
 cd ..
 catkin_make -DCATKIN_WHITELIST_PACKAGES="xiaoqiang_tts"
 ```
