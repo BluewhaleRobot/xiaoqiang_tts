@@ -62,19 +62,19 @@ if __name__ == "__main__":
             audio_data = client.tts(text.data)
             if audio_data is not None:
                 with open(os.path.join(
-                        "/tmp/xiaoqiang_tts", text.data), "w+") as audio_file:
+                        "xiaoqiang_tts", text.data), "w+") as audio_file:
                     audio_file.write(bytearray(audio_data.data))
         if audio_data is not None:
             audio_pub.publish(audio_data)
         processing_flag = False
 
     def read_from_cache(text):
-        if not os.path.exists("/tmp/xiaoqiang_tts"):
-            os.mkdir("/tmp/xiaoqiang_tts")
+        if not os.path.exists("xiaoqiang_tts"):
+            os.mkdir("xiaoqiang_tts")
             return None
-        if os.path.exists(os.path.join("/tmp/xiaoqiang_tts", text.data)):
+        if os.path.exists(os.path.join("xiaoqiang_tts", text.data)):
             with open(os.path.join(
-                    "/tmp/xiaoqiang_tts", text.data), "rb") as audio_file:
+                    "xiaoqiang_tts", text.data), "rb") as audio_file:
                 audio_data = AudioData()
                 audio_data.data = audio_file.read()
                 return audio_data
