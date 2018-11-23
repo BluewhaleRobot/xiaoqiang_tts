@@ -72,7 +72,8 @@ if __name__ == "__main__":
         if not os.path.exists("xiaoqiang_tts"):
             os.mkdir("xiaoqiang_tts")
             return None
-        if os.path.exists(os.path.join("xiaoqiang_tts", text.data)):
+        if os.path.exists(os.path.join("xiaoqiang_tts", text.data)) and \
+         os.path.getsize(os.path.join("xiaoqiang_tts", text.data)) > 0:
             with open(os.path.join(
                     "xiaoqiang_tts", text.data), "rb") as audio_file:
                 audio_data = AudioData()
