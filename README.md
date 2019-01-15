@@ -13,6 +13,7 @@ rosdep install xiaoqiang_tts
 sudo pip install requests
 sudo pip install baidu-aip
 sudo apt-get install mplayer
+sudo apt-get install python-scipy
 cd ..
 catkin_make -DCATKIN_WHITELIST_PACKAGES="xiaoqiang_tts"
 ```
