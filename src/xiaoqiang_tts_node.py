@@ -27,6 +27,7 @@
 
 import os
 import time
+import hashlib
 
 import rospy
 from audio_common_msgs.msg import AudioData
@@ -59,23 +60,29 @@ if __name__ == "__main__":
         processing_flag = True
         audio_data = read_from_cache(text)
         if audio_data is None:
+            m = hashlib.md5()
+            m.update(text.data)
+            audio_filename = m.hexdigest()
             audio_data = client.tts(text.data)
             if audio_data is not None:
                 with open(os.path.join(
-                        "xiaoqiang_tts", text.data), "w+") as audio_file:
+                        "xiaoqiang_tts", audio_filename), "w+") as audio_file:
                     audio_file.write(bytearray(audio_data.data))
         if audio_data is not None:
             audio_pub.publish(audio_data)
         processing_flag = False
 
     def read_from_cache(text):
+        m = hashlib.md5()
+        m.update(text.data)
+        audio_filename = m.hexdigest()
         if not os.path.exists("xiaoqiang_tts"):
             os.mkdir("xiaoqiang_tts")
             return None
-        if os.path.exists(os.path.join("xiaoqiang_tts", text.data)) and \
-         os.path.getsize(os.path.join("xiaoqiang_tts", text.data)) > 0:
+        if os.path.exists(os.path.join("xiaoqiang_tts", audio_filename)) and \
+         os.path.getsize(os.path.join("xiaoqiang_tts", audio_filename)) > 0:
             with open(os.path.join(
-                    "xiaoqiang_tts", text.data), "rb") as audio_file:
+                    "xiaoqiang_tts", audio_filename), "rb") as audio_file:
                 audio_data = AudioData()
                 audio_data.data = audio_file.read()
                 return audio_data
