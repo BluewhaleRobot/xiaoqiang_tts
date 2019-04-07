@@ -1,5 +1,5 @@
 <launch>
-    <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen">
+    <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen" respawn="true" respawn_delay="10">
         <!-- 设置语音合成后端程序，目前支持baidu和xunfei -->
         <param name="engine" value="xunfei"/>
         <!-- xunfei语音合成app_id,此参数要去迅飞开发者中心自己申请 -->
@@ -7,5 +7,5 @@
         <!-- 声音输出话题 -->
         <remap from="~audio" to="/xiaoqiang_audio/audio" />
     </node>
-    <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen" />
+    <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen" respawn="true" respawn_delay="10"/>
 </launch>
