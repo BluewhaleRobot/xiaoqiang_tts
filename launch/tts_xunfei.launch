@@ -1,13 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <launch>
-    <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen" respawn="true" respawn_delay="10">
-        <!-- 设置语音合成后端程序，目前支持baidu和xunfei -->
-        <param name="engine" value="xunfei"/>
-        <!-- xunfei语音合成app_id,此参数要去迅飞开发者中心自己申请 -->
-        <param name="app_id" value="5b2efdad" type="string"/>
-        <!-- 语言，默认为汉语，只有汉语可以在联网时自动生成语音文件，其他语言需要在 ~/.ros/xiaoqing_tts/ 下创建对应语言的文件夹。并按照对应的文件名复制相关语音文件 -->
-        <param name="locale" value="zh-cn" type="string"/>
-        <!-- 声音输出话题 -->
-        <remap from="~audio" to="/xiaoqiang_audio/audio" />
-    </node>
-    <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen" respawn="true" respawn_delay="10"/>
+  <node name="xiaoqiang_tts" pkg="xiaoqiang_tts" type="xiaoqiang_tts_node.py" output="screen" respawn="true" respawn_delay="10">
+    <!-- 设置语音合成后端程序，目前支持baidu和xunfei -->
+    <param name="engine" value="xunfei" />
+    <!-- xunfei语音合成app_id,此参数要去迅飞开发者中心自己申请 -->
+    <param name="app_id" value="5b2efdad" type="string" />
+    <!-- 语言，默认为汉语，只有汉语可以在联网时自动生成语音文件，其他语言需要在 ~/.ros/xiaoqing_tts/ 下创建对应语言的文件夹。并按照对应的文件名复制相关语音文件 -->
+    <param name="locale" value="en" type="string" />
+    <!-- 声音输出话题 -->
+    <remap from="~audio" to="/xiaoqiang_audio/audio" />
+  </node>
+  <node name="xiaoqiang_audio" pkg="xiaoqiang_audio" type="audio_play_node.py" output="screen" respawn="true" respawn_delay="10" />
 </launch>

@@ -60,6 +60,7 @@ if __name__ == "__main__":
             return
         processing_flag = True
         audio_data = read_from_cache(text)
+        locale = rospy.get_param("~locale", "zh-cn")
         if audio_data is None:
             m = hashlib.md5()
             m.update(text.data)
@@ -74,6 +75,7 @@ if __name__ == "__main__":
         processing_flag = False
 
     def read_from_cache(text):
+        locale = rospy.get_param("~locale", "zh-cn")
         m = hashlib.md5()
         m.update(text.data)
         audio_filename = m.hexdigest()
