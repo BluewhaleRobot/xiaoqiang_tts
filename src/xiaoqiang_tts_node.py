@@ -36,6 +36,8 @@ from std_msgs.msg import String
 from engines.baidu_tts import BaiduTTS as bd_client
 from engines.xunfei_tts import XunfeiTTS as xf_client
 
+locale = "zh-cn"
+
 if __name__ == "__main__":
     rospy.init_node("xiaoqiang_tts", anonymous=True)
     audio_pub = rospy.Publisher("~audio", AudioData, queue_size=10)
@@ -55,12 +57,11 @@ if __name__ == "__main__":
     processing_flag = False
 
     def text_cb(text):
-        global processing_flag
+        global processing_flag, locale
         if processing_flag:
             return
         processing_flag = True
         audio_data = read_from_cache(text)
-        locale = rospy.get_param("~locale", "zh-cn")
         if audio_data is None:
             m = hashlib.md5()
             m.update(text.data)
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         processing_flag = False
 
     def read_from_cache(text):
-        locale = rospy.get_param("~locale", "zh-cn")
+        global locale
         m = hashlib.md5()
         m.update(text.data)
         audio_filename = m.hexdigest()
@@ -108,3 +109,4 @@ if __name__ == "__main__":
     text_sub = rospy.Subscriber("~text", String, text_cb)
     while not rospy.is_shutdown():
         time.sleep(1)
+        locale = rospy.get_param("~locale", "zh-cn")
