@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding=utf-8
 # The MIT License (MIT)
 #
@@ -49,8 +49,9 @@ def is_end(audio_data):
     last_two_seconds = audio_data.data[2 * -16000 * 2:]
     if len(last_two_seconds) < 2 * 16000 * 2:
         return False
-    last_two_seconds = [float(struct.unpack("<h", "".join(
-        last_two_seconds[2*x:2*x + 2]))[0]) for x in range(0, 2 * 16000)]
+    last_two_seconds = [ float(struct.unpack(
+        "<h", bytes(last_two_seconds[2*x:2*x + 2]) )[0]
+        ) for x in range(0, 2 * 16000)]
     sf = signal.filtfilt(b, a, last_two_seconds)
     if numpy.max(sf) > MIN_VOLUM and len(sf[sf > MIN_VOLUM]) > 150:
         return False
@@ -62,8 +63,8 @@ def audio_duration(audio_data):
 
 
 def is_empty(audio_data):
-    raw_data = [float(struct.unpack("<h", "".join(audio_data.data[2*x:2*x + 2]))[0])
-                for x in range(0, len(audio_data.data) / 2)]
+    raw_data = [float(struct.unpack("<h", bytes(audio_data.data[2*x:2*x + 2]))[0])
+                for x in range(0, int(len(audio_data.data) / 2))]
     raw_data = signal.filtfilt(b, a, raw_data)
 
     if numpy.max(raw_data) < MIN_VOLUM:

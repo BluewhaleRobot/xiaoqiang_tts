@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding=utf-8
 # The MIT License (MIT)
 #
@@ -64,12 +64,12 @@ if __name__ == "__main__":
         audio_data = read_from_cache(text)
         if audio_data is None:
             m = hashlib.md5()
-            m.update(text.data)
+            m.update(text.data.encode("utf-8"))
             audio_filename = m.hexdigest()
             audio_data = client.tts(text.data)
             if audio_data is not None:
                 with open(os.path.join(
-                        "xiaoqiang_tts", locale, audio_filename), "w+") as audio_file:
+                        "xiaoqiang_tts", locale, audio_filename), "w+b") as audio_file:
                     audio_file.write(bytearray(audio_data.data))
         if audio_data is not None:
             audio_pub.publish(audio_data)
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     def read_from_cache(text):
         global locale
         m = hashlib.md5()
-        m.update(text.data)
+        m.update(text.data.encode("utf-8"))
         audio_filename = m.hexdigest()
         if not os.path.exists("xiaoqiang_tts"):
             os.mkdir("xiaoqiang_tts")

@@ -54,10 +54,10 @@ inline PyObject *stringToPython(const char *input)
 inline std::string stringFromPython(PyObject *input)
 {
   Py_ssize_t size;
-  char *data;
 #if PY_MAJOR_VERSION >= 3
-  data = PyUnicode_AsUTF8AndSize(input, &size);
+  const char *data = PyUnicode_AsUTF8AndSize(input, &size);
 #else
+  char *data;
   PyString_AsStringAndSize(input, &data, &size);
 #endif
   return std::string(data, size);

@@ -193,7 +193,7 @@ tts(PyObject *self, PyObject *args)
   PyObject *item;
   for (int i = 0; i < audio_data.size(); i++)
   {
-    item = PyInt_FromLong(audio_data[i]);
+    item = PyLong_FromLong(audio_data[i]);
     PyList_SET_ITEM(pylist, i, item);
   }
   return pylist;
@@ -226,10 +226,8 @@ struct PyModuleDef tf_module = {
     module_methods         // methods
 };
 
-PyMODINIT_FUNC PyInit_xunfei_tts()
+PyMODINIT_FUNC PyInit__xunfei_tts()
 {
-  if (!staticInit())
-    return NULL;
   return moduleInit(PyModule_Create(&tf_module));
 }
 #endif
